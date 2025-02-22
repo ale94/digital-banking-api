@@ -1,9 +1,6 @@
 package com.ale94.digital_banking_api.domain.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,5 +26,11 @@ public class UserEntity implements Serializable {
     private String identityDocument;
     private String username;
     private String password;
+
+    @OneToOne(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private AccountEntity account;
 
 }
