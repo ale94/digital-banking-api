@@ -19,7 +19,7 @@ public class AccountEntity implements Serializable {
     private String accountNumber;
     private String cbu;
     private String alias;
-    private TypeAccount typeAccount;
+//    private TypeAccount typeAccount;
     private BigDecimal balance;
 
     @ToString.Exclude
