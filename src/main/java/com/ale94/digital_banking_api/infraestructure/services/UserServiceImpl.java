@@ -1,6 +1,7 @@
 package com.ale94.digital_banking_api.infraestructure.services;
 
 import com.ale94.digital_banking_api.api.models.requests.UserRequest;
+import com.ale94.digital_banking_api.api.models.responses.AccountResponse;
 import com.ale94.digital_banking_api.api.models.responses.UserResponse;
 import com.ale94.digital_banking_api.domain.entities.AccountEntity;
 import com.ale94.digital_banking_api.domain.entities.UserEntity;
@@ -10,6 +11,7 @@ import com.ale94.digital_banking_api.infraestructure.abstract_services.UserServi
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -28,7 +30,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse create(UserRequest request) {
 
-        var user = UserEntity.builder()
+        var userToPersist = UserEntity.builder()
                 .name(request.getName())
                 .email(request.getEmail())
                 .phone(request.getPhone())
@@ -38,17 +40,52 @@ public class UserServiceImpl implements UserService {
                 .password(request.getPassword())
                 .build();
 
+        var account = AccountEntity.builder()
+                .accountNumber(accountNumberGenerator())
+                .cbu(cbuGenerator())
+                .alias(aliasGenerator(request))
+                .balance(BigDecimal.valueOf(0))
+                .build();
 
-        return null;
+        var accountPersisted = this.accountRepository.save(account);
+        userToPersist.setAccount(accountPersisted);
+        var userPersisted = this.userRepository.save(userToPersist);
+        log.info("User saved with id {}", userPersisted.getId());
+
+        return this.entityToResponse(userPersisted);
     }
 
-    public String accountNumberGenerator() {
+    private String accountNumberGenerator() {
         StringBuilder prefix = new StringBuilder("BANK" + LocalDateTime.now().getYear());
         for (int i = 0; i < 10; i++) {
             Random aleatorio = new Random();
             prefix.append(aleatorio.nextInt(9));
         }
         return prefix.toString();
+    }
+
+    private String cbuGenerator() {
+        StringBuilder prefix = new StringBuilder();
+        for (int i = 0; i < 23; i++) {
+            Random aleatorio = new Random();
+            prefix.append(aleatorio.nextInt(9));
+        }
+        return prefix.toString();
+    }
+
+    private String aliasGenerator(UserRequest request) {
+        StringBuilder prefix = new StringBuilder();
+        prefix.append(request.getName()).append(".").append("BANK.").append(LocalDateTime.now().getYear());
+        return prefix.toString();
+    }
+
+    private UserResponse entityToResponse(UserEntity entity) {
+        var response = new UserResponse();
+        BeanUtils.copyProperties(entity, response);
+        var accountResponse = new AccountResponse();
+        BeanUtils.copyProperties(entity.getAccount(), accountResponse);
+        response.setAccountResponse(accountResponse);
+        return response;
     }
 
 }

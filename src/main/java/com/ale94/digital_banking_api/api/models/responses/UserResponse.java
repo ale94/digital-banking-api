@@ -20,4 +20,5 @@ public class UserResponse implements Serializable {
     private LocalDateTime creationDate;
     private String identityDocument;
     private String username;
+    private AccountResponse accountResponse;
 }
