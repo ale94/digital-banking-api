@@ -30,6 +30,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse create(UserRequest request) {
 
+        var accountToPersist = AccountEntity.builder()
+                .accountNumber(accountNumberGenerator())
+                .cbu(cbuGenerator())
+                .alias(aliasGenerator(request))
+                .balance(BigDecimal.valueOf(0))
+                .build();
+
+        var accountPersisted = this.accountRepository.save(accountToPersist);
+
         var userToPersist = UserEntity.builder()
                 .name(request.getName())
                 .email(request.getEmail())
@@ -38,20 +47,11 @@ public class UserServiceImpl implements UserService {
                 .identityDocument(request.getIdentityDocument())
                 .username(request.getUsername())
                 .password(request.getPassword())
+                .account(accountPersisted)
                 .build();
 
-        var account = AccountEntity.builder()
-                .accountNumber(accountNumberGenerator())
-                .cbu(cbuGenerator())
-                .alias(aliasGenerator(request))
-                .balance(BigDecimal.valueOf(0))
-                .build();
-
-        var accountPersisted = this.accountRepository.save(account);
-        userToPersist.setAccount(accountPersisted);
         var userPersisted = this.userRepository.save(userToPersist);
         log.info("User saved with id {}", userPersisted.getId());
-
         return this.entityToResponse(userPersisted);
     }
 

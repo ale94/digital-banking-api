@@ -1,6 +1,5 @@
 package com.ale94.digital_banking_api.domain.entities;
 
-import com.ale94.digital_banking_api.util.enums.TypeAccount;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,15 +18,12 @@ public class AccountEntity implements Serializable {
     private String accountNumber;
     private String cbu;
     private String alias;
-//    private TypeAccount typeAccount;
+    //    private TypeAccount typeAccount;
     private BigDecimal balance;
 
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
     @OneToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name="user_id")
     private UserEntity user;
-
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
@@ -38,4 +34,5 @@ public class AccountEntity implements Serializable {
             mappedBy = "account"
     )
     private List<TransactionEntity> transactions;
+
 }

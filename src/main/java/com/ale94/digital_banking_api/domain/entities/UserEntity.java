@@ -1,10 +1,7 @@
 package com.ale94.digital_banking_api.domain.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -27,10 +24,11 @@ public class UserEntity implements Serializable {
     private String username;
     private String password;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToOne(
-            mappedBy = "user",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
+            mappedBy = "user"
+    )
     private AccountEntity account;
 
 }
