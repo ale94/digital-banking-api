@@ -21,4 +21,5 @@ public class UserResponse implements Serializable {
     private String identityDocument;
     private String username;
     private AccountResponse accountResponse;
+    private Boolean lock;
 }

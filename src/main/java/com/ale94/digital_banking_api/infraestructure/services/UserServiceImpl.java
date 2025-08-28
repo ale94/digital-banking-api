@@ -1,5 +1,6 @@
 package com.ale94.digital_banking_api.infraestructure.services;
 
+import com.ale94.digital_banking_api.api.models.requests.UserEditRequest;
 import com.ale94.digital_banking_api.api.models.requests.UserRequest;
 import com.ale94.digital_banking_api.api.models.responses.AccountResponse;
 import com.ale94.digital_banking_api.api.models.responses.UserResponse;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -37,8 +39,6 @@ public class UserServiceImpl implements UserService {
                 .balance(BigDecimal.valueOf(0))
                 .build();
 
-        var accountPersisted = this.accountRepository.save(accountToPersist);
-
         var userToPersist = UserEntity.builder()
                 .name(request.getName())
                 .email(request.getEmail())
@@ -47,12 +47,64 @@ public class UserServiceImpl implements UserService {
                 .identityDocument(request.getIdentityDocument())
                 .username(request.getUsername())
                 .password(request.getPassword())
-                .account(accountPersisted)
+                .isLock(false)
+                .account(accountToPersist)
                 .build();
+
+        accountToPersist.setUser(userToPersist);
 
         var userPersisted = this.userRepository.save(userToPersist);
         log.info("User saved with id {}", userPersisted.getId());
         return this.entityToResponse(userPersisted);
+    }
+
+    @Override
+    public List<UserResponse> findAll() {
+        return this.userRepository.findAll()
+                .stream()
+                .map(this::entityToResponse)
+                .toList();
+    }
+
+    @Override
+    public UserResponse findById(Long id) {
+        var userFromDB = this.userRepository.findById(id).orElseThrow();
+        return this.entityToResponse(userFromDB);
+    }
+
+    @Override
+    public UserResponse update(Long id, UserEditRequest request) {
+        var userToUpdate = this.userRepository.findById(id).orElseThrow();
+        userToUpdate.setEmail(request.getEmail());
+        userToUpdate.setPhone(request.getPhone());
+        var userUpdated = this.userRepository.save(userToUpdate);
+        log.info("User updated with id {}", userUpdated.getId());
+        return this.entityToResponse(userUpdated);
+    }
+
+    @Override
+    public void changePassword(Long id, String password) {
+        var userToChangePassword = this.userRepository.findById(id).orElseThrow();
+        userToChangePassword.setPassword(password);
+        this.userRepository.save(userToChangePassword);
+    }
+
+    @Override
+    public void lock(Long id) {
+        var userToLock = this.userRepository.findById(id).orElseThrow();
+        userToLock.setLock(true);
+    }
+
+    @Override
+    public void unlock(Long id) {
+        var userToUnLock = this.userRepository.findById(id).orElseThrow();
+        userToUnLock.setLock(false);
+    }
+
+    @Override
+    public void delete(Long id) {
+        var userToDelete = this.userRepository.findById(id).orElseThrow();
+        this.userRepository.delete(userToDelete);
     }
 
     private String accountNumberGenerator() {

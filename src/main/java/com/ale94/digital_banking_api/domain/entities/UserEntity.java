@@ -23,12 +23,11 @@ public class UserEntity implements Serializable {
     private String identityDocument;
     private String username;
     private String password;
+    private boolean isLock;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @OneToOne(
-            mappedBy = "user"
-    )
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private AccountEntity account;
 
 }
