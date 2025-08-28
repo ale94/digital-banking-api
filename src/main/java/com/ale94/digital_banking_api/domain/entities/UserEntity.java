@@ -19,8 +19,8 @@ public class UserEntity implements Serializable {
     private String name;
     private String email;
     private String phone;
-    private LocalDateTime creationDate;
-    private String identityDocument;
+    private LocalDateTime regDate;
+    private String identityDoc;
     private String username;
     private String password;
     private boolean isLock;
