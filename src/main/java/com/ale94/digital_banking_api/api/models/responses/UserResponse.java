@@ -20,6 +20,6 @@ public class UserResponse implements Serializable {
     private LocalDateTime creationDate;
     private String identityDocument;
     private String username;
-    private AccountResponse accountResponse;
     private Boolean lock;
+    private AccountResponse accountResponse;
 }
