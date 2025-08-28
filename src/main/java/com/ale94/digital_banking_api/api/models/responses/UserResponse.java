@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -17,8 +19,9 @@ public class UserResponse implements Serializable {
     private String name;
     private String email;
     private String phone;
-    private LocalDateTime creationDate;
-    private String identityDocument;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDateTime regDate;
+    private String identityDoc;
     private String username;
     private Boolean lock;
     private AccountResponse accountResponse;
