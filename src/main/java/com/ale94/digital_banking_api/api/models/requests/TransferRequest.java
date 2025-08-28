@@ -1,6 +1,5 @@
 package com.ale94.digital_banking_api.api.models.requests;
 
-//import com.ale94.digital_banking_api.util.enums.TypeAccount;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,10 +12,8 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 @Data
-public class AccountRequest implements Serializable {
-    private String accountNumber;
-    private String cbu;
-    private String alias;
-    //private TypeAccount typeAccount;
-    private BigDecimal balance;
+public class TransferRequest implements Serializable {
+    private String fromAccountNumber;
+    private String toAccountNumber;
+    private BigDecimal amount;
 }
