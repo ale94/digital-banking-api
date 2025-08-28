@@ -30,4 +30,5 @@ public class AccountController {
         this.accountService.addBalance(accountNumber, balance);
         return ResponseEntity.noContent().build();
     }
+
 }

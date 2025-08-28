@@ -1,9 +1,7 @@
 package com.ale94.digital_banking_api.infraestructure.services;
 
 import com.ale94.digital_banking_api.domain.entities.AccountEntity;
-import com.ale94.digital_banking_api.domain.entities.UserEntity;
 import com.ale94.digital_banking_api.domain.repositories.AccountRepository;
-import com.ale94.digital_banking_api.domain.repositories.UserRepository;
 import com.ale94.digital_banking_api.infraestructure.abstract_services.AccountService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +17,6 @@ import java.math.BigDecimal;
 public class AccountServiceImpl implements AccountService {
 
     private final AccountRepository accountRepository;
-    private final UserRepository userRepository;
 
     @Override
     public AccountEntity getBalance(String accountNumber) {
