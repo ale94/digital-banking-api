@@ -6,7 +6,6 @@ import com.ale94.digital_banking_api.api.models.responses.AccountResponse;
 import com.ale94.digital_banking_api.api.models.responses.UserResponse;
 import com.ale94.digital_banking_api.domain.entities.AccountEntity;
 import com.ale94.digital_banking_api.domain.entities.UserEntity;
-import com.ale94.digital_banking_api.domain.repositories.AccountRepository;
 import com.ale94.digital_banking_api.domain.repositories.UserRepository;
 import com.ale94.digital_banking_api.infraestructure.abstract_services.UserService;
 import jakarta.transaction.Transactional;
@@ -27,7 +26,6 @@ import java.util.Random;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final AccountRepository accountRepository;
 
     @Override
     public UserResponse create(UserRequest request) {
@@ -43,8 +41,8 @@ public class UserServiceImpl implements UserService {
                 .name(request.getName())
                 .email(request.getEmail())
                 .phone(request.getPhone())
-                .creationDate(LocalDateTime.now())
-                .identityDocument(request.getIdentityDocument())
+                .regDate(LocalDateTime.now())
+                .identityDoc(request.getIdentityDoc())
                 .username(request.getUsername())
                 .password(request.getPassword())
                 .isLock(false)

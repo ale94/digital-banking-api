@@ -1,6 +1,5 @@
 package com.ale94.digital_banking_api.api.models.responses;
 
-import com.ale94.digital_banking_api.util.enums.TypeAccount;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
