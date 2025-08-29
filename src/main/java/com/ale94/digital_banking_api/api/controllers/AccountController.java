@@ -32,9 +32,15 @@ public class AccountController {
     }
 
     @PatchMapping("/deposit/{accountNumber}")
-    public ResponseEntity<String> transfer(@PathVariable String accountNumber, @RequestParam BigDecimal amount) {
+    public ResponseEntity<String> deposit(@PathVariable String accountNumber, @RequestParam BigDecimal amount) {
         this.accountService.deposit(accountNumber, amount);
         return ResponseEntity.ok("Deposito Exitoso!");
+    }
+
+    @PatchMapping("/withdraw/{accountNumber}")
+    public ResponseEntity<String> withdraw(@PathVariable String accountNumber, @RequestParam BigDecimal amount) {
+        this.accountService.withdraw(accountNumber, amount);
+        return ResponseEntity.ok("Retiro Exitoso!");
     }
 
 }

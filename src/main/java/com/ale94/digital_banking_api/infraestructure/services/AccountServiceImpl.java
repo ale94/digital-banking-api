@@ -86,4 +86,15 @@ public class AccountServiceImpl implements AccountService {
         this.accountRepository.save(account);
     }
 
+    @Override
+    public void withdraw(String accountNumber, BigDecimal amount) {
+        var account = this.accountRepository.findByAccountNumber(accountNumber).orElseThrow();
+        if (account.getBalance().compareTo(amount) >= 0) {
+            account.setBalance(account.getBalance().subtract(amount));
+            this.accountRepository.save(account);
+        } else {
+            throw new IllegalArgumentException("Fondos insuficientes en la cuenta");
+        }
+    }
+
 }
