@@ -20,7 +20,7 @@ public class AccountController {
     @GetMapping("/{accountNumber}")
     public ResponseEntity<Map<String, BigDecimal>> getBalance(@PathVariable String accountNumber) {
         var response = new HashMap<String, BigDecimal>();
-        var account = this.accountService.getBalance(accountNumber);
+        var account = this.accountService.balance(accountNumber);
         response.put("balance", account.getBalance());
         return ResponseEntity.ok(response);
     }
@@ -28,7 +28,13 @@ public class AccountController {
     @PatchMapping("/transfer")
     public ResponseEntity<String> transfer(@RequestBody TransferRequest request) {
         this.accountService.transfer(request);
-        return ResponseEntity.ok("Transferencia Exitosa");
+        return ResponseEntity.ok("Transferencia Exitosa!");
+    }
+
+    @PatchMapping("/deposit/{accountNumber}")
+    public ResponseEntity<String> transfer(@PathVariable String accountNumber, @RequestParam BigDecimal amount) {
+        this.accountService.deposit(accountNumber, amount);
+        return ResponseEntity.ok("Deposito Exitoso!");
     }
 
 }

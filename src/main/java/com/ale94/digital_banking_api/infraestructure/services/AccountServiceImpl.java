@@ -10,6 +10,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -25,7 +26,7 @@ public class AccountServiceImpl implements AccountService {
     private final TransactionRepository transactionRepository;
 
     @Override
-    public AccountEntity getBalance(String accountNumber) {
+    public AccountEntity balance(String accountNumber) {
         return accountRepository.findByAccountNumber(accountNumber).orElseThrow();
     }
 
@@ -76,6 +77,13 @@ public class AccountServiceImpl implements AccountService {
                 .build();
 
         transactionRepository.save(transaction);
+    }
+
+    @Override
+    public void deposit(String accountNumber, BigDecimal amount) {
+        var account = this.accountRepository.findByAccountNumber(accountNumber).orElseThrow();
+        account.setBalance(account.getBalance().add(amount));
+        this.accountRepository.save(account);
     }
 
 }
