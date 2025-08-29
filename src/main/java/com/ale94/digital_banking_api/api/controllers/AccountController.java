@@ -1,5 +1,6 @@
 package com.ale94.digital_banking_api.api.controllers;
 
+import com.ale94.digital_banking_api.api.models.requests.TransferRequest;
 import com.ale94.digital_banking_api.infraestructure.abstract_services.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,10 +25,9 @@ public class AccountController {
         return ResponseEntity.ok(response);
     }
 
-    @PatchMapping("/{accountNumber}/{balance}")
-    public ResponseEntity<Void> addBalance(@PathVariable String accountNumber,
-                                           @PathVariable BigDecimal balance) {
-        this.accountService.addBalance(accountNumber, balance);
+    @PatchMapping("/transfer")
+    public ResponseEntity<Void> transfer(@RequestBody TransferRequest request) {
+        this.accountService.deposit(request);
         return ResponseEntity.noContent().build();
     }
 
