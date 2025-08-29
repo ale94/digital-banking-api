@@ -2,11 +2,17 @@ package com.ale94.digital_banking_api.infraestructure.services;
 
 import com.ale94.digital_banking_api.api.models.requests.TransferRequest;
 import com.ale94.digital_banking_api.domain.entities.AccountEntity;
+import com.ale94.digital_banking_api.domain.entities.TransactionEntity;
 import com.ale94.digital_banking_api.domain.repositories.AccountRepository;
+import com.ale94.digital_banking_api.domain.repositories.TransactionRepository;
 import com.ale94.digital_banking_api.infraestructure.abstract_services.AccountService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,6 +22,7 @@ import org.springframework.stereotype.Service;
 public class AccountServiceImpl implements AccountService {
 
     private final AccountRepository accountRepository;
+    private final TransactionRepository transactionRepository;
 
     @Override
     public AccountEntity getBalance(String accountNumber) {
@@ -56,6 +63,19 @@ public class AccountServiceImpl implements AccountService {
         // Guardar cambios
         accountRepository.save(fromAccount);
         accountRepository.save(toAccount);
+
+        // Registrar transacción
+        var transaction = TransactionEntity.builder()
+                .operationNumber(UUID.randomUUID().toString())
+                .destinationAccount(toAccount.getAccountNumber())
+                .amount(request.getAmount())
+                .description(request.getDescription())
+                .date(LocalDateTime.now())
+                .notification("Transfer completed successfully")
+                .account(fromAccount)
+                .build();
+
+        transactionRepository.save(transaction);
     }
 
 }
