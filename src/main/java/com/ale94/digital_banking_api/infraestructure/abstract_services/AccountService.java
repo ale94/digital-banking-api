@@ -7,6 +7,6 @@ public interface AccountService {
 
     AccountEntity getBalance(String accountNumber);
 
-    void deposit(TransferRequest request);
+    void transfer(TransferRequest request);
 
 }

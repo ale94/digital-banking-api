@@ -26,9 +26,9 @@ public class AccountController {
     }
 
     @PatchMapping("/transfer")
-    public ResponseEntity<Void> transfer(@RequestBody TransferRequest request) {
-        this.accountService.deposit(request);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<String> transfer(@RequestBody TransferRequest request) {
+        this.accountService.transfer(request);
+        return ResponseEntity.ok("Transferencia Exitosa");
     }
 
 }

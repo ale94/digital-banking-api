@@ -23,7 +23,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void deposit(TransferRequest request) {
+    public void transfer(TransferRequest request) {
 
         var fromAccount = accountRepository.findByAccountNumber(request.getFromAccountNumber())
                 .orElseThrow();
