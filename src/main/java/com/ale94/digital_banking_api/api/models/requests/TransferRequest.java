@@ -16,4 +16,5 @@ public class TransferRequest implements Serializable {
     private String fromAccountNumber;
     private String toAccountNumber;
     private BigDecimal amount;
+    private String description;
 }
