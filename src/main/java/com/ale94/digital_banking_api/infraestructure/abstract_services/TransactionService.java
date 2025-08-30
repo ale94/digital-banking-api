@@ -7,4 +7,6 @@ import com.ale94.digital_banking_api.api.models.responses.TransactionResponse;
 public interface TransactionService {
 
     List<TransactionResponse> getAllTransactions(String accountNumber);
+
+    byte[] generatePDF(String operationNumber);
 }
