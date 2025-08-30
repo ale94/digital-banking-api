@@ -20,7 +20,7 @@ public class TransactionResponse implements Serializable {
     private String destinationAccount;
     private BigDecimal amount;
     private String description;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy - HH:mm:ss")
     private LocalDateTime date;
     private String notification;
 }
