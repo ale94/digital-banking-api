@@ -4,6 +4,8 @@ import com.ale94.digital_banking_api.api.models.requests.UserEditRequest;
 import com.ale94.digital_banking_api.api.models.requests.UserRequest;
 import com.ale94.digital_banking_api.api.models.responses.UserResponse;
 import com.ale94.digital_banking_api.infraestructure.abstract_services.UserService;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "User")
 @RequestMapping("/api/users")
 @RestController
 @RequiredArgsConstructor

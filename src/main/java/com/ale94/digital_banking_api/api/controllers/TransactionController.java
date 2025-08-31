@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ale94.digital_banking_api.api.models.responses.TransactionResponse;
 import com.ale94.digital_banking_api.infraestructure.abstract_services.TransactionService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
+@Tag(name = "Transaction")
 @RequestMapping("/api/transactions")
 @RestController
 @RequiredArgsConstructor
