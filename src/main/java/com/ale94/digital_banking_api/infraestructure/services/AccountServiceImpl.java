@@ -6,6 +6,8 @@ import com.ale94.digital_banking_api.domain.entities.TransactionEntity;
 import com.ale94.digital_banking_api.domain.repositories.AccountRepository;
 import com.ale94.digital_banking_api.domain.repositories.TransactionRepository;
 import com.ale94.digital_banking_api.infraestructure.abstract_services.AccountService;
+import com.ale94.digital_banking_api.util.exceptions.IdNotFoundException;
+
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,16 +29,17 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountEntity balance(String accountNumber) {
-        return accountRepository.findByAccountNumber(accountNumber).orElseThrow();
+        return accountRepository.findByAccountNumber(accountNumber)
+                .orElseThrow(() -> new IdNotFoundException("account"));
     }
 
     @Override
     public void transfer(TransferRequest request) {
 
         var fromAccount = accountRepository.findByAccountNumber(request.getFromAccountNumber())
-                .orElseThrow();
+                .orElseThrow(() -> new IdNotFoundException("account"));
         var toAccount = accountRepository.findByAccountNumber(request.getToAccountNumber())
-                .orElseThrow();
+                .orElseThrow(() -> new IdNotFoundException("account"));
 
         var userFrom = fromAccount.getUser();
         var userTo = toAccount.getUser();
@@ -81,14 +84,16 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void deposit(String accountNumber, BigDecimal amount) {
-        var account = this.accountRepository.findByAccountNumber(accountNumber).orElseThrow();
+        var account = this.accountRepository.findByAccountNumber(accountNumber)
+                .orElseThrow(() -> new IdNotFoundException("account"));
         account.setBalance(account.getBalance().add(amount));
         this.accountRepository.save(account);
     }
 
     @Override
     public void withdraw(String accountNumber, BigDecimal amount) {
-        var account = this.accountRepository.findByAccountNumber(accountNumber).orElseThrow();
+        var account = this.accountRepository.findByAccountNumber(accountNumber)
+                .orElseThrow(() -> new IdNotFoundException("account"));
         if (account.getBalance().compareTo(amount) >= 0) {
             account.setBalance(account.getBalance().subtract(amount));
             this.accountRepository.save(account);

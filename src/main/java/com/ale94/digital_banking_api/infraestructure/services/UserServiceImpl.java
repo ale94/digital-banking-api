@@ -8,6 +8,8 @@ import com.ale94.digital_banking_api.domain.entities.AccountEntity;
 import com.ale94.digital_banking_api.domain.entities.UserEntity;
 import com.ale94.digital_banking_api.domain.repositories.UserRepository;
 import com.ale94.digital_banking_api.infraestructure.abstract_services.UserService;
+import com.ale94.digital_banking_api.util.exceptions.IdNotFoundException;
+
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -66,13 +68,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse findById(Long id) {
-        var userFromDB = this.userRepository.findById(id).orElseThrow();
+        var userFromDB = this.userRepository.findById(id)
+                .orElseThrow(() -> new IdNotFoundException("user"));
         return this.entityToResponse(userFromDB);
     }
 
     @Override
     public UserResponse update(Long id, UserEditRequest request) {
-        var userToUpdate = this.userRepository.findById(id).orElseThrow();
+        var userToUpdate = this.userRepository.findById(id)
+                .orElseThrow(() -> new IdNotFoundException("user"));
         userToUpdate.setEmail(request.getEmail());
         userToUpdate.setPhone(request.getPhone());
         var userUpdated = this.userRepository.save(userToUpdate);
@@ -82,26 +86,30 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void changePassword(Long id, String password) {
-        var userToChangePassword = this.userRepository.findById(id).orElseThrow();
+        var userToChangePassword = this.userRepository.findById(id)
+                .orElseThrow(() -> new IdNotFoundException("user"));
         userToChangePassword.setPassword(password);
         this.userRepository.save(userToChangePassword);
     }
 
     @Override
     public void lock(Long id) {
-        var userToLock = this.userRepository.findById(id).orElseThrow();
+        var userToLock = this.userRepository.findById(id)
+                .orElseThrow(() -> new IdNotFoundException("user"));
         userToLock.setLock(true);
     }
 
     @Override
     public void unlock(Long id) {
-        var userToUnLock = this.userRepository.findById(id).orElseThrow();
+        var userToUnLock = this.userRepository.findById(id)
+                .orElseThrow(() -> new IdNotFoundException("user"));
         userToUnLock.setLock(false);
     }
 
     @Override
     public void delete(Long id) {
-        var userToDelete = this.userRepository.findById(id).orElseThrow();
+        var userToDelete = this.userRepository.findById(id)
+                .orElseThrow(() -> new IdNotFoundException("user"));
         this.userRepository.delete(userToDelete);
     }
 

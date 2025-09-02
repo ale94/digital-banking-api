@@ -19,6 +19,7 @@ import com.ale94.digital_banking_api.domain.entities.TransactionEntity;
 import com.ale94.digital_banking_api.domain.repositories.AccountRepository;
 import com.ale94.digital_banking_api.domain.repositories.TransactionRepository;
 import com.ale94.digital_banking_api.infraestructure.abstract_services.TransactionService;
+import com.ale94.digital_banking_api.util.exceptions.IdNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,18 +35,23 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public List<TransactionResponse> getAllTransactions(String accountNumber) {
-        var account = this.accountRepository.findByAccountNumber(accountNumber).orElseThrow();
+        var account = this.accountRepository.findByAccountNumber(accountNumber)
+                .orElseThrow(() -> new IdNotFoundException("account"));
         var transactions = account.getTransactions();
         return transactions.stream().map(this::entityToResponse).toList();
     }
 
     @Override
     public byte[] generatePDF(String operationNumber) {
-        var transaction = this.transactionRepository.findByOperationNumber(operationNumber).orElseThrow();
+        var transaction = this.transactionRepository.findByOperationNumber(operationNumber)
+                .orElseThrow(() -> new IdNotFoundException("transaction"));
         var account = transaction.getAccount();
         var userFrom = account.getUser();
-        var destinationName = this.accountRepository.findByAccountNumber(transaction.getDestinationAccount())
-                .orElseThrow().getUser().getName();
+        var destinationName = this.accountRepository
+                .findByAccountNumber(transaction.getDestinationAccount())
+                .orElseThrow(() -> new IdNotFoundException("account"))
+                .getUser()
+                .getName();
 
         try (PDDocument document = new PDDocument(); ByteArrayOutputStream out = new ByteArrayOutputStream()) {
 
