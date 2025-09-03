@@ -4,6 +4,7 @@ import com.ale94.digital_banking_api.api.models.requests.TransferRequest;
 import com.ale94.digital_banking_api.infraestructure.abstract_services.AccountService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class AccountController {
     }
 
     @PatchMapping("/transfer")
-    public ResponseEntity<String> transfer(@RequestBody TransferRequest request) {
+    public ResponseEntity<String> transfer(@Valid @RequestBody TransferRequest request) {
         this.accountService.transfer(request);
         return ResponseEntity.ok("Transferencia Exitosa!");
     }

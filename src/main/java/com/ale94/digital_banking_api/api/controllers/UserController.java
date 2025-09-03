@@ -6,6 +6,7 @@ import com.ale94.digital_banking_api.api.models.responses.UserResponse;
 import com.ale94.digital_banking_api.infraestructure.abstract_services.UserService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -42,12 +43,12 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserResponse> create(@RequestBody UserRequest request) {
+    public ResponseEntity<UserResponse> create(@Valid @RequestBody UserRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.userService.create(request));
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<UserResponse> update(@PathVariable Long id, @RequestBody UserEditRequest request) {
+    public ResponseEntity<UserResponse> update(@PathVariable Long id, @Valid @RequestBody UserEditRequest request) {
         return ResponseEntity.ok(this.userService.update(id, request));
     }
 
