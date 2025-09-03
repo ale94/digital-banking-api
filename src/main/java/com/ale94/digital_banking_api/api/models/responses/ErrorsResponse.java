@@ -1,5 +1,7 @@
 package com.ale94.digital_banking_api.api.models.responses;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,8 +11,8 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @SuperBuilder
 @Data
-public class ErrorResponse extends BaseErrorResponse {
+public class ErrorsResponse extends BaseErrorResponse {
 
-    private String error;
+    private List<String> errors;
 
 }
