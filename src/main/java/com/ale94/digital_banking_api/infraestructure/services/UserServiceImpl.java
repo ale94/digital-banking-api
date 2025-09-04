@@ -138,13 +138,4 @@ public class UserServiceImpl implements UserService {
         return prefix.toString();
     }
 
-    // private UserResponse entityToResponse(UserEntity entity) {
-    //     var response = new UserResponse();
-    //     BeanUtils.copyProperties(entity, response);
-    //     var accountResponse = new AccountResponse();
-    //     BeanUtils.copyProperties(entity.getAccount(), accountResponse);
-    //     response.setAccountResponse(accountResponse);
-    //     return response;
-    // }
-
 }

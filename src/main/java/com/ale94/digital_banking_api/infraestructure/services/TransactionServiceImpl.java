@@ -172,10 +172,4 @@ public class TransactionServiceImpl implements TransactionService {
                 return y;
         }
 
-        // private TransactionResponse entityToResponse(TransactionEntity entity) {
-        // var response = new TransactionResponse();
-        // BeanUtils.copyProperties(entity, response);
-        // return response;
-        // }
-
 }
