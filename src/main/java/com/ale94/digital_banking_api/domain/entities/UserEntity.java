@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Data
-@Entity(name = "user")
+@Entity(name = "users")
 public class UserEntity implements Serializable {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
