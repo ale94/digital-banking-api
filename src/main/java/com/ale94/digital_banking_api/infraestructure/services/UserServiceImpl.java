@@ -1,25 +1,25 @@
 package com.ale94.digital_banking_api.infraestructure.services;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Random;
+
+import org.springframework.stereotype.Service;
+
 import com.ale94.digital_banking_api.api.models.requests.UserEditRequest;
 import com.ale94.digital_banking_api.api.models.requests.UserRequest;
-import com.ale94.digital_banking_api.api.models.responses.AccountResponse;
 import com.ale94.digital_banking_api.api.models.responses.UserResponse;
 import com.ale94.digital_banking_api.domain.entities.AccountEntity;
 import com.ale94.digital_banking_api.domain.entities.UserEntity;
 import com.ale94.digital_banking_api.domain.repositories.UserRepository;
 import com.ale94.digital_banking_api.infraestructure.abstract_services.UserService;
+import com.ale94.digital_banking_api.infraestructure.mappers.UserMapper;
 import com.ale94.digital_banking_api.util.exceptions.IdNotFoundException;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
-import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Random;
 
 @Service
 @Transactional
@@ -28,6 +28,7 @@ import java.util.Random;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
     @Override
     public UserResponse create(UserRequest request) {
@@ -55,14 +56,14 @@ public class UserServiceImpl implements UserService {
 
         var userPersisted = this.userRepository.save(userToPersist);
         log.info("User saved with id {}", userPersisted.getId());
-        return this.entityToResponse(userPersisted);
+        return this.userMapper.toUserResponse(userPersisted);
     }
 
     @Override
     public List<UserResponse> findAll() {
         return this.userRepository.findAll()
                 .stream()
-                .map(this::entityToResponse)
+                .map(userMapper::toUserResponse)
                 .toList();
     }
 
@@ -70,7 +71,7 @@ public class UserServiceImpl implements UserService {
     public UserResponse findById(Long id) {
         var userFromDB = this.userRepository.findById(id)
                 .orElseThrow(() -> new IdNotFoundException("user"));
-        return this.entityToResponse(userFromDB);
+        return this.userMapper.toUserResponse(userFromDB);
     }
 
     @Override
@@ -81,7 +82,7 @@ public class UserServiceImpl implements UserService {
         userToUpdate.setPhone(request.getPhone());
         var userUpdated = this.userRepository.save(userToUpdate);
         log.info("User updated with id {}", userUpdated.getId());
-        return this.entityToResponse(userUpdated);
+        return this.userMapper.toUserResponse(userUpdated);
     }
 
     @Override
@@ -137,13 +138,13 @@ public class UserServiceImpl implements UserService {
         return prefix.toString();
     }
 
-    private UserResponse entityToResponse(UserEntity entity) {
-        var response = new UserResponse();
-        BeanUtils.copyProperties(entity, response);
-        var accountResponse = new AccountResponse();
-        BeanUtils.copyProperties(entity.getAccount(), accountResponse);
-        response.setAccountResponse(accountResponse);
-        return response;
-    }
+    // private UserResponse entityToResponse(UserEntity entity) {
+    //     var response = new UserResponse();
+    //     BeanUtils.copyProperties(entity, response);
+    //     var accountResponse = new AccountResponse();
+    //     BeanUtils.copyProperties(entity.getAccount(), accountResponse);
+    //     response.setAccountResponse(accountResponse);
+    //     return response;
+    // }
 
 }
