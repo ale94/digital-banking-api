@@ -27,7 +27,7 @@ El proyecto está diseñado siguiendo buenas prácticas de **arquitectura en cap
 - **Spring Boot 3+**
 - **Spring Data JPA (Hibernate)**
 - **Spring Security + JWT**
-- **MySQL / PostgreSQL** (configurable)
+- **PostgreSQL**
 - **Maven**
 - **Swagger / OpenAPI**
 - **Docker** (opcional para despliegue)
