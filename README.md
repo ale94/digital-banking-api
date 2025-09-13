@@ -30,7 +30,7 @@ El proyecto está diseñado siguiendo buenas prácticas de **arquitectura en cap
 - **PostgreSQL**
 - **Maven**
 - **Swagger / OpenAPI**
-- **Docker** (opcional para despliegue)
+- **Docker**
 
 ---
 
