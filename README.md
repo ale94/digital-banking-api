@@ -25,7 +25,7 @@ El proyecto está diseñado siguiendo buenas prácticas de **arquitectura en cap
 
 - **Java 17+**
 - **Spring Boot 3**
-- **Spring Data JPA (Hibernate)**
+- **Spring Data JPA**
 - **Spring Security + JWT**
 - **PostgreSQL**
 - **Maven**
