@@ -24,13 +24,13 @@ El proyecto está diseñado siguiendo buenas prácticas de **arquitectura en cap
 ## 🛠️ Tecnologías Utilizadas
 
 - **Java 17+**
-- **Spring Boot 3+**
-- **Spring Data JPA (Hibernate)**
+- **Spring Boot 3**
+- **Spring Data JPA**
 - **Spring Security + JWT**
-- **MySQL / PostgreSQL** (configurable)
+- **PostgreSQL**
 - **Maven**
 - **Swagger / OpenAPI**
-- **Docker** (opcional para despliegue)
+- **Docker**
 
 ---
 
