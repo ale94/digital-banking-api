@@ -1,4 +1,4 @@
-package com.ale94.digital_banking_api.config;
+package com.ale94.digital_banking_api.config.security.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

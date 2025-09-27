@@ -1,4 +1,4 @@
-package com.ale94.digital_banking_api.config;
+package com.ale94.digital_banking_api.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +12,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.ale94.digital_banking_api.config.security.filters.JwtAuthenticationFilter;
+import com.ale94.digital_banking_api.config.security.filters.JwtAuthorizationFilter;
+import com.ale94.digital_banking_api.config.security.jwt.JwtUtils;
 import com.ale94.digital_banking_api.infraestructure.services.UserDetailsServiceImpl;
 
 import lombok.RequiredArgsConstructor;

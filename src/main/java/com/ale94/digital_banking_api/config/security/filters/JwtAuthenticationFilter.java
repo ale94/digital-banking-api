@@ -1,4 +1,4 @@
-package com.ale94.digital_banking_api.config;
+package com.ale94.digital_banking_api.config.security.filters;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -6,13 +6,13 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.ale94.digital_banking_api.config.security.jwt.JwtUtils;
 import com.ale94.digital_banking_api.domain.entities.UserEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

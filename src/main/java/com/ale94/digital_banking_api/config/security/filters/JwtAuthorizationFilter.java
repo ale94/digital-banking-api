@@ -1,4 +1,4 @@
-package com.ale94.digital_banking_api.config;
+package com.ale94.digital_banking_api.config.security.filters;
 
 import java.io.IOException;
 
@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.ale94.digital_banking_api.config.security.jwt.JwtUtils;
 import com.ale94.digital_banking_api.infraestructure.services.UserDetailsServiceImpl;
 
 import jakarta.servlet.FilterChain;
