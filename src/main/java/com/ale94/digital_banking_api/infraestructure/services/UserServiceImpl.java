@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ale94.digital_banking_api.api.models.requests.UserEditRequest;
@@ -29,6 +30,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserResponse create(UserRequest request) {
@@ -47,7 +49,7 @@ public class UserServiceImpl implements UserService {
                 .regDate(LocalDateTime.now())
                 .identityDoc(request.getIdentityDoc())
                 .username(request.getUsername())
-                .password(request.getPassword())
+                .password(passwordEncoder.encode(request.getPassword()))
                 .isLock(false)
                 .account(accountToPersist)
                 .build();
