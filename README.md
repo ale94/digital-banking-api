@@ -2,10 +2,11 @@
 
 ## 📚 Descripción
 
-**Digital Banking API** es una aplicación RESTful desarrollada con **Spring Boot** que permite la gestión completa de un sistema bancario digital.  
-Incluye operaciones para **usuarios**, **cuentas bancarias**, **depósitos**, **retiros**, **transferencias** y **consultas de movimientos**, garantizando seguridad y escalabilidad.
+Digital Banking API es una aplicación RESTful desarrollada con Spring Boot que proporciona funcionalidades basicas de un sistema bancario digital.
 
-El proyecto está diseñado siguiendo buenas prácticas de **arquitectura en capas** (Controller - Service - Repository), con soporte para **Spring Security** y autenticación mediante **JWT**.
+La API permite gestionar operaciones esenciales como el manejo de usuarios, cuentas bancarias, y la realización de depósitos, retiros y transferencias. Además, ofrece consultas del historial de movimientos, garantizando en todo momento la seguridad y escalabilidad de las transacciones.
+
+El proyecto sigue una arquitectura en capas (Controlador - Servicio - Repositorio) y cuenta con Spring Security para la protección de los endpoints, utilizando JWT (JSON Web Tokens) para la autenticación de usuarios.
 
 ---
 
