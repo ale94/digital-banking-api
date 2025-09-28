@@ -35,29 +35,27 @@ El proyecto está diseñado siguiendo buenas prácticas de **arquitectura en cap
 ---
 
 ## 🔑 Endpoints Principales
-- 👤 Autenticación
+### 👤 Autenticación
+- `POST /digital_banking/login` - Autenticarse y obtener token JWT.
 
-    - POST /api/auth/register → Registrar un nuevo usuario.
+### 🏦 Usuarios
+- `POST /digital_banking/api/users` - Crear un usuario.
+- `GET /digital_banking/api/users` - Obtener todos los usuarios.
+- `GET /digital_banking/api/users/{id}` - Obtener un usuario.
+- `PUT /digital_banking/api/users/{id}` - Actualizar un usuario.
+- `DELETE /digital_banking/api/users/{id}` - Borrar un usuario.
+- `PATCH /digital_banking/api/users/{id}/change-password?password=modificada` - Cambiar contraseña.
+- `PATCH /digital_banking/api/users/{id}/lock` - Bloquear un usuario.
+- `PATCH /digital_banking/api/users/{id}/unlock` - Desbloquear un usuario.
 
-    - POST /api/auth/login → Autenticarse y obtener token JWT.
+### 💰 Cuentas
+- `GET /digital_banking/api/accounts/balance/{id}` - Obtener el balance de una cuenta.
+- `PATCH /digital_banking/api/accounts/transfer` - Realizar transferencia a otra cuenta.
+- `PATCH /digital_banking/api/accounts/deposit/{id}` - Depositar dinero en cuenta.
+- `PATCH /digital_banking/api/accounts/withdraw/{id}?amount=5000` - Retirar dinero de cuenta.
 
-- 🏦 Cuentas
+### 📊 Transacciones
+- `GET /digital_banking/api/transactions/{id}` - Obtener una transaccion.
+- `GET /digital_banking/api/download-pdf/{id}` - Obtener el comprobante de una transaccion.
 
-    - POST /api/accounts → Crear una cuenta para un usuario.
-
-    - GET /api/accounts/{id} → Consultar detalles de una cuenta.
-
-    - GET /api/accounts → Listar todas las cuentas.
-
-- 💰 Operaciones
-
-    - POST /api/accounts/{id}/deposit → Depositar dinero.
-
-    - POST /api/accounts/{id}/withdraw → Retirar dinero.
-
-    - POST /api/accounts/transfer → Transferir entre cuentas.
-
-- 📊 Movimientos
-
-    - GET /api/accounts/{id}/transactions → Consultar historial de transacciones.
-
+---
